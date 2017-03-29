@@ -1,2 +1,8 @@
 learn 1
+<<<<<<< HEAD
 branch master
+=======
+git branch
+111
+branch featuer
+>>>>>>> feature1
