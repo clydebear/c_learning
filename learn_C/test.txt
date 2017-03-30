@@ -1,2 +1,6 @@
 learn 1
+<<<<<<< HEAD
 branch master
+=======
+branch feature1
+>>>>>>> feature1
