@@ -1,12 +1,2 @@
 learn 1
-<<<<<<
-branch master
-<<<<<<< HEAD
-=======
-=======
-branch feature1
->>>>>>> feature1
-branch  feature2
-
-add
->>>>>>> feature2
+add 3
