@@ -1,5 +1,0 @@
-learn 1
-add 3
-add new1
-asd
-g
