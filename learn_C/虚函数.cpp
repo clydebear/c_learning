@@ -13,8 +13,10 @@
 using namespace std;
 class A{//虚函数示例代码2
     public:
+      A(){};
         virtual void fun(){cout<<"A::fun"<<endl;}//虚函数实现多态
         virtual void fun2(){cout<<"A::fun2"<<endl;}
+        ~A(){};
 };
 class B : public A{
     public:
