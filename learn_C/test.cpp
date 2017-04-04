@@ -11,6 +11,7 @@ char *myString()
 }
 int main(int argc, char **argv)
 {
-    printf("%s\n", myString());
+    printf("%c\n", myString());
+    //printf("hello world"); 
     return 0;
 }
