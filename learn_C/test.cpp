@@ -12,6 +12,7 @@ int main()
     {
       cin>>mag_ring[i];
     }
+<<<<<<< HEAD
     int temp = mag_ring[0];
     while(k--)
     {
@@ -38,5 +39,12 @@ int main()
       cout<<mag_ring[i]<<" ";
     }
     cout<<mag_ring[n-1]<<endl;
+=======
+    return buffer;
+}
+int main(int argc, char **argv)
+{
+    printf("%c\n", myString()); 
+>>>>>>> 7205cd0621552c899bcbb3d9163977e27250c671
     return 0;
 }
