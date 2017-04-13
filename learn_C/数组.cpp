@@ -12,11 +12,12 @@ void fun(int *P)
 {
     cout<<"在函数中"<<sizeof(P)<<endl;
 }
+
 int main(int argc, char const *argv[])
 {
   //1定义和初始化：维度必须是常量表达式，不允许拷贝和赋值，不存在引用 的数组
-  constexpr unsigned int size1 = 19;//g++ -std=c++11 数组.cpp
-  string bad1[size1] = {};//如果size1不是常量表达式就不能用于数组大小的声明
+  //constexpr unsigned int size1 = 19;//g++ -std=c++11 数组.cpp
+  //string bad1[size1] = {};//如果size1不是常量表达式就不能用于数组大小的声明
   char shuzu1[] ="123456789";
   string temp1 = shuzu1;
   cout<<sizeof(shuzu1)<<" "<<strlen(shuzu1)<<" "<<temp1.length()<<endl;//10 9 9
@@ -51,5 +52,6 @@ int main(int argc, char const *argv[])
   {
     cout<<i<< " ";
   }
+
   return 0;
 }

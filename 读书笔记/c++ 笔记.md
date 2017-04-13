@@ -54,7 +54,7 @@ void resetvalue2(int &i)
 }
 void resetvalue3(const int &i)
 {
-  cout<<i<<endl;//改变了i所引用对象的值
+  cout<<i<<endl;//无法改变了i所引用对象的值
 }
 int main()
 {
@@ -73,7 +73,7 @@ int main()
 - const 指针：int * const ip = & i;
 - 顶层const 表示指针本身是个常量
 - 底层const 表示指针所指的对象是一个常量
-- 重载时，形参不能用const int a和 int a 区别
+- 重载时，形参用const int a和 int a 区别
 
 14.尽量使用常量引用
 ```c
@@ -99,3 +99,30 @@ int main()
   ...
 }
 ```
+
+15.vector 可以直接作为形参，也可以被引用。当不知道形参数量时，可以用vector替代.void testvetcor(std::vector<int> &v)
+
+16.重载和形参：顶层const不算重载，底层const（指针和引用（强调指向））辨别了是否指向常量可以算作重载
+
+17.assert宏的原型定义在<assert.h>中，其作用是如果它的条件返回错误，则终止程序执行   没有#define NDEBUG
+
+18.函数匹配国曾：候选函数->可行函数->最佳匹配
+```c
+void f();
+void f(int);
+void f(int,int);
+void f(double,doble = 3.14)
+f(5.6);//调用的是f(double,doble = 3.14)
+```
+
+19.编译器先变异成员再变异成员函数，所以无需在意成员出现的次序。
+
+20.class 和struct定义类唯一的区别是：默认的访问权限
+struct：定义在第一个访问说明符之前的成员是public的
+class:定义在第一个访问说明符之前的成员的private的
+
+21.友元：当非类成员对类成员没有访问权限的时候可以通过友元实现访问：在类的内部声明：**friend** 返回类型  函数名(参数列表);
+> 虽然友元破坏的封装性，c++语言设计上是合理，给设计者提供了很大的弹性，2当B允许A访问，而不允许C。。D访问时就可用到，3举例Manager要访问item的私有成员就有用
+
+22.注意构造函数初始化和赋值初始化的区别。一些const和引用是必须通过初始化而不能赋值的。直接初始化效率更高。
+> 成员的初始化顺序和成员在类中出现的顺序有关，而与初始化列表的先后顺序无关。
