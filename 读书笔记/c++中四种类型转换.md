@@ -1,3 +1,4 @@
+
 ## 1.static_cast
 
 最常用的类型转换符，在正常状况下的类型转换，如把int转换为float，如：int i；float f； f=（float）i；或者f=static_cast<float>(i);
