@@ -1,0 +1,344 @@
+# 顺序容器
+> 从是否支持随机访问，插入快慢分析  
+
+- vector 可变大小数组，支持随机快速访问，除去尾部，插入慢（因为要后移操作）
+- deque 双端队列，支持随机快速访问，头尾插入快
+- list 双向链表，只支持双向访问，插入快,空间开销大
+- push_front()  emplace_front()
+- forward_list 单项链表，单向访问，增删快，空间开销大c++11  
+insert()  emplace()不支持push_back和emplace_back
+- array 数组，与内置数组比，更安全更易使用c++11
+- string 字符串容器
+
+#### array
+int digs[10] = {0,1,2,3,4,5,6,7,8,9};  
+int cp[10] = digs;//错误，内置数组不支持拷贝或赋值  
+array<int,10> digits = {0,1,2,3,4,5,6,7,8,9};  
+array<int,10> copy = digits;//正确  
+
+### 容器初始化等  
+- 初始化：C c(b,e);c初始化为迭代器b与e之间的元素拷贝，但不包括e。  
+- note:当一个容器初始化为另外一个容器的拷贝时，两个容器类型，元素类型必须相同。或者可以用C c(b,e)去初始化  
+- 容器swap(容器1，容器2);这个函数只是交换了两个容器内部数据结构，元素本身并未交换。(快)这个函数用于array和string要当心
+- 容器大小：size,empty();forward_list支持max_size和empty但不支持size
+- 容器范围：[begin,end)
+- 关系运算符：所有容器支持== !=  
+除了无序关联容器外，所有容器支持> > =< <=
+
+### 在容器中的特定位置添加元素
+```c
+vector< const char *> v = {"a","an","the"};
+v.insert(v.begin(),"A");//第一个参数为迭代器，指向插入的位置
+v.insert(v.end(),10,"A");//第二个元素，插入范围
+list<string> slist;
+slist.insert(slist.begin(),v.end()-2,v.end());//将v的后两个元素，添加到slist开始位置  
+slist.insert(slist.end(),{"1","2","3"}});//列表添加
+```
+insert的返回值是插入元素的新的位置
+### c++11  emplace  emplace_back
+> 类似与push_back 返回void
+```c
+c.emplace_back("978-00412801",25,12.2);//将参数传递给元素对象的构造函数，直接构造元素
+c.push_back("978-00412801",25,12.2);//错误
+c.push_back(Sales_data("978-00412801",25,12.2));//正确创建临时对象传递给push_back
+```
+|向顺序容器添加元素的操作|
+|---|
+|操作会改变容器的大小；array不支持这些操作。|
+|forward_list有自己专有版本的insert和emplace；
+|forward_list不支持push_back和emplace_back
+|vector和string不支持push_front和emplace_front
+|c.push_back(t)　　　　　　　　在c的尾部创建一个值为t或由args创建的元素，返回void
+|c.emplace_back(args)
+|c.push_front(t)　　　　　　　　在c的头部创建一个值为t或由args创建的元素，返回void
+|c.emplace_front(args)
+|c.insert(p,t)　　　　　　　　　  在迭代器p指向的元素之前创建一个值为t或由args创建的元素，返回指向新添加的元素的迭代器
+|c.emplace(p,args)
+|c.insert(p,n,t)　　　　　　　　   在迭代器p指向的元素之前插入n个值为t的元素。返回指向新添加的第一个元素的迭代器；若n为0，则返回p
+|c.insert(p,b,e)　　　　　　　　  将迭代器b和e指向的范围内的元素插入到迭代器p指向的元素之前。b和e不能指向c中的元素，返回指向新添加的第一个元素的迭代器；若范围为空，则返回p
+|c.insert(p,il)　　　　　　　　　 il是一个花括号包围的元素值列表，将这些给定值插入到迭代器p指向的元素之前。返回指向新添加的第一个元素的迭代器：若列表为空，则返回p
+|向一个vector、string或deque插入元素会使所有指向容器的迭代器、引用和指针失效。
+
+### 使用push_back
+push_back将一个元素追加到一个vector的尾部  
+除array和forward_list之外，每个顺序容器（包括string类型）都支持push_back。
+```c
+string word;
+while(cin>>word)
+　　container.push_back(word);
+```
+container的类型可以是list、vector或deque。  
+当我们用一个对象来初始化容器时，或将一个对象插入到容器中时，实际上放入到容器中的是对象值的一个拷贝，而不是对象本身。就像我们将一个对象传递给非引用参数一样，容器中的元素与提供值的对象之间没有任何关联。随后对容器中元素的任何改变都不会影响到原始对象，反之亦然。
+
+### 使用push_front
+list、forward_list和deque容器还支持名为push_front的类似操作。此操作将元素插入到容器头部  
+```c
+for(size_t ix=0;ix!=4;++ix)
+　　ilist.push_front(ix);//输出就是逆序3210
+```
+
+deque像vector一样提供了随机访问元素的能力，但它提供了vector所不支持的push_front。deque保证在容器首部进行插入和删除元素的操作都只花费常数时间。与vector一样，在deque首尾之外的位置插入元素会很**耗时**
+### 在容器中的特定位置添加元素
+insert成员提供了更一般的添加功能，它允许我们在容器中任意位置插入0个或多个元素.<font color=#0099ff>vector、deque、list和string都支持insert成员。forward_list提供了特殊版本的insert成员</font>  
+每个insert函数都接受一个迭代器作为其一个参数。迭代器指出了在容器中什么位置放置新元素。它可以指向容器中任何位置，包括容器尾部之后的下一个位置。由于迭代器可能指向容器尾部之后不存在的元素的位置，而且在容器开始位置插入元素是很有用的功能，所有insert函数将元素插入到迭代器所指定的位置之前。例如，下面的语句
+### 插入范围内元素
+svec.insert(svec.end(),10,"Anna");
+### 使用insert的返回值  
+iter=lst.insert(iter,word);  
+insert返回的迭代器指向这个新元素  
+
+### 使用emplace操作
+新标准引入了三个成员——emplace_front、emplace和emplace_back，这些操作构造而不是拷贝元素。这些操作分别对应push_front、insert和push_back，允许我们将元素放置在容器头部、一个指定的位置之前或容器尾部。  
+当调用push或insert成员函数时，我们将元素类型对象传递给它们，这些对象被拷贝到容器中。而当我们调用一个emplace成员函数时，则是将参数传递给元素类型的构造函数。emplace成员使用这些参数在容器管理的内存空间中直接构造元素  <font color=#0099ff>在调用emplace_back时，会在容器管理的内存空间中直接创建对象。而调用push_back则会创建一个局部临时对象，并将其压入容器中。</font>  
+emplace函数的参数根据元素类型而变化，参数必须与元素类型的构造函数相匹配：  
+c.emplace_back();//使用Sales_data的默认构造函数  
+c.emplace(iter,"999-999999999"); //使用Sales_data(string)   
+<font color=#0099ff>emplace函数在容器中直接构造元素，传递给emplace函数的参数必须与元素类型的构造函数相匹配。</font>  
+
+### 访问元素
+<font color=#0099ff>包括array在内的每个顺序容器都有一个front成员函数，而除了forward_list之外的所以顺序容器都有一个back成员函数。这两个操作分别返回首元素和尾元素的引用：  //在解引用一个迭代器或调用front或back之前检查是否有元素</font>
+
+  |在顺序容器中访问元素的操作|
+  |---|
+  |at和下标操作是适用于string、vector和array
+|back不适用于forward_list。
+|c.back() 　　　　　　　　　　返回c中尾元素的引用。若c为空，函数行为未定义
+|c.front()　　　　　　　　　　 返回c中首元素的引用。若c为空，函数行为未定义
+|c[n]　　　　　　　　　　　　 返回c中下标为n的元素的引用，n是一个无符号整数。若n>c.size(),则函数的行为未定义
+|c.at[n]　　　　　　　　　　  返回下标为n的元素的引用。如果下标越界，则抛出一个out_of_range异常
+|对一个空容器调用front和back，就像使用一个越界的下标一样
+
+### 范围元素
+- 下标
+```c
+v.at(2);
+v[2];
+```
+- 迭代器
+
+### 访问成员函数返回的是引用
+在容器中访问元素的成员函数（即，front、back、下标和at）返回的都是引用。如果容器是一个const对象，则返回值是const的引用。如果容器不是const的，则返回值是普通引用，我们可以用来改变元素的值。
+```c
+if(!c.empty()){
+
+　　c.front()=42;  //将42赋予c中的第一个元素
+
+　　auto &v=c.back();   //获得指向最后一个元素的引用
+
+　　v=1024;  　　//改变c中的元素
+
+　　auto v2=c.back();    //v2不是一个引用，它是c.back()的一个拷贝
+
+　　v2=0;　　　　　　//未改变c中的元素
+
+}
+
+```
+
+### 删除元素返回被删元素之后的位置的迭代器
+|顺序容器的删除操作|
+|---|
+|这些操作会改变容器的大小，所以不适用于array
+|forward_list有特殊版本的erase
+|forward_list不支持pop_back；vector和string不支持pop_front
+|c.pop_back() 　　　　　　删除c中尾元素，若c为空，则函数行为未定义，函数返回void
+|c.pop_front()　　　　　　删除c中首元素，若c为空，则函数行为未定义，函数返回void
+|c.erase(p)　　　　　　　 删除迭代器p所指的元素，返回以指向被删除元素之后的迭代器，若p指向尾元素，则返回尾后迭代器。若p是尾后迭代器，则函数的行为未定义
+|c.erase(b,e)　　　　　　 删除迭代器b和e所指定范围内的元素，返回一个指向最后一个被删除元素之后元素的迭代器，若e本身就是尾后迭代器，则函数也返回尾后迭代器
+|c.clear()　　　　　　　　 删除c中的所以元素，返回void
+|删除deque中除首位元素之外的任何元素都会使所有迭代器、引用和指针失效。指向vector或string中删除点之后位置的迭代器、引用和指针都会失效。
+- erase():v.erase(v.begin());v.erase(v.begin(),v.end());
+- clear():v.clear();
+- v.pop_back();
+- d.pop_front();  
+> 例子：  
+```c
+list<int> lst = {0,1,2,3,4,5,6,7,8,9};
+auto it = lst.begin();
+while(it!=lst.end())
+{
+  if(*it%2)
+    it = lst.erase(it);
+  else
+    ++it;
+}
+auto it2 = lst.begin();
+for(;it2!=lst.end();it2++)
+  cout<<*it2<<"  ";
+```
+
+### 从容器内部删除一个元素
+成员函数erase从容器中指定位置删除元素，我们可以删除由一个迭代器指定的单个元素，也可以删除由一对迭代器指定的范围内的所有元素。两种形式的erase都返回指向删除的（最后一个）元素之后位置的迭代器。即，若j是i之后的元素，那么erase(i)将返回指向j的迭代器。
+
+例如，下面的循环删除一个list中的所有奇数元素：
+```c
+list<int> lst=(0,1,2,3,4,5,6,7,8,9};
+auto it=lst.begin();
+while(it!=lst.end())
+　　if(*it%2)
+　　　　it=lst.erase(it);  //删除此元素
+　　else
+　　　　++it;
+```
+每个循环步中，首先检查当前元素是否是奇数，如果是，就删除该元素，并将it设置为我们所删除的元素之后的元素。如果*it为偶数，我们将it递增，从而在下一步循环检查下一个元素。
+### pop_front和pop_back成员函数
+pop_front和pop_back成员函数分别删除首元素和尾元素。与vector和string不支持push_front一样，这些类型也不支持pop_front。类似的，forward_list不支持pop_back。与元素访问成员函数类似，不能对一个空容器执行弹出操作。
+
+这些操作返回void，如果你需要弹出的元素的值，就必须在执行弹出操作之前保存它：
+```c
+while(!ilist.empty()){
+
+　　process(ilist.front());  //对ilist的首元素进行一些处理
+
+　　ilist.pop_front();　　//完成处理后删除首元素
+
+}
+```
+### 删除多个元素  
+返回最后被删元素之后的位置的迭代器  
+lst.erase(elem,elem2);//调用后elem = elem2  
+
+
+### 特殊的forward_list操作
+特殊？由于单向性，无法完成：删除一个元素是改变其前一个元素的指向。故要有其特殊的函数去操作  
+
+lst.before_begin()  |  返回指向链表首元素之前并不存在的元素的迭代器，此迭代器不能解引用。
+--|--
+  st.cbefore_begin()|  cbefore_begin()返回一个const_iterator
+  lst.insert_after(p,t)|  在迭代器p之后的位置插入元素。t是一个对象
+  lst.insert_after(p,n,t)|  n是数量
+  lst.insert_after(p,b,e)|  b和e是表示范围的一对迭代器（b和e不能指向lst内）
+  lst.insert_after(p,il)|  il是一个花括号列表，元素的迭代器。如果范围为空，则返回p，若p为尾后迭代器，则函数行为未定义。
+  emplace_after(p,args)|  使用args在p指定的位置之后创建一个元素，返回一个指向这个新元素的迭代器。若p为尾后迭代器，则函数的行为未定义
+  lst.erase_after(p)|  删除p指向的位置之后的元素，
+  lst.erase_after(b,e)|  或删除从b之后直到（但不包含）e之间的元素。返回一个指向被删除元素之后元素的迭代器，若不存在这样的元素，则返回尾后迭代器，如果p指向lst的尾元素或者是一个尾后迭代器，则函数的行为未定义
+
+  当在forward_list中添加或删除元素时，我们必须关注两个迭代器——**一个指向我们要处理的元素，另一个指向其前驱。**例如，我们从list中删除奇数元素的循环程序，将其改为从forward_list中删除元素  
+
+  ```c
+forward_list<int> flst={0,1,2,3,4,5,6,7,8,9};
+auto prev=flst.before_begin();  //表示flst的“首前元素”
+auto curr=flst.begin();  //表示flst中的第一个元素
+while(curr!=flst.end())
+{
+    if(*curr%2)
+        curr=flst.erase_after(prev);// 删除它并移动curr
+    else
+     {
+        prev=curr;  //移动迭代器curr，指向下一个元素，prev指向curr之前的元素
+        ++curr;
+     }
+}
+  ```
+
+### 改变容器大小
+>顺序容器大小操作resize不适用array  
+c.resize(n)         调整c的大小为n个元素。若n<c.size(),则多出的元素被丢弃。若必须添加新元素，对新元素进行值初始化  
+c.resize(n,t)　　　　　 调整c的大小为n个元素。任何新添加的元素都初始化为值t  
+
+list<int> ilist(10,42);   //10个int：每个的值都是42
+
+ilist.resize(15);   //将5个值为0的元素添加到ilist的末尾
+
+ilist.resize(25,-1);  //将10个值为-1的元素添加到ilist的末尾
+
+ilist.resize(5);    //从ilist末尾删除20个元素  
+resize操作接受一个可选的元素值参数，用来初始化添加到容器中的元素。如果调用者未提供此参数，新元素进行值初始化。如果容器保存的是类类型，且resize向容器添加新元素，则我们必须提供初始值，或者元素类型必须提供一个默认构造函数。
+
+### 容器操作可能使迭代器失效
+> 建议：代码要最小化程序段使用迭代器，每次改变容器后要重新定位迭代器  
+
+
+向容器中添加元素和从容器中删除元素的操作可能会使指向容器的指针、引用或迭代器失效。一个失效的指针、引用或迭代器将不再表示任何元素。使用失效的指针、引用或迭代器是一种严重的程序设计错误，很可能引起与使用未初始化指针一样的问题  
+
+向容器添加元素后：  
+- 如果容器是vector或string，且存储空间被重新分配，则指向容器的迭代器、指针和引用都会失效。如果存储空间未重新分配，指向插入位置之前的元素的迭代器、指针和引用将会失效。
+- 对于deque。插入到除首尾位置之外的任何位置都会导致迭代器、指针和引用失效。如果在首尾位置添加元素，迭代器会失效，但指向存在的元素的引用和指针不会失效
+- 对于list和forward_list，指向容器的迭代器（包括尾后迭代器和首前迭代器）、指针和引用仍然有效。
+
+当我们删除一个元素后：
+- 对于list和forward_list，指向容器其他位置的迭代器、指针和引用仍然有效
+- 对于deque，如果在首尾之外的任何位置删除元素，那么指向被删除元素外其他元素的迭代器、引用或指针也会失效。如果是删除deque的尾元素，则尾后迭代器也会失效，但其他迭代器、引用和指针不受影响；如果是删除首元素，这些也不会受影响。
+- 对于vector和string，指向被删除元素之前元素的迭代器、引用和指针仍有效。注意：当我们删除元素时，尾后迭代器总是会失效。  
+
+### 编写改变容器的循环程序
+
+添加/删除vector、string或deque元素的循环程序必须考虑迭代器、引用和指针可能失效的问题。程序必须保证每个循环步中都更新迭代器、引用和指针。如果循环中调用的是insert或erase，那么更新迭代器很容易。这些操作都返回迭代器，我们可以用来更新：
+```c
+//傻瓜循环，删除偶数元素，复制每个奇数元素
+vector<int> vi={0,1,2,3,4,5,6,7,8,9};
+auto iter=vi.begin();  //调用begin而不是cbegin，因为我们要改变vi
+while(iter!=vi.end())
+{
+    if(*iter%2){
+        iter=vi.insert(iter,*iter);//复制当前元素,插入到当前元素之前,返回指向新元素的位置
+        iter+=2;   //向前移动迭代器，跳过当前元素以及插入到它之前的元素
+    }
+    else
+        iter=vi.erase(iter);  //删除偶数元素
+    //!!!不应向前移动迭代器，iter指向我们删除的元素之后的元素
+}
+```
+
+此程序删除vector中的偶数元素，并复制每个奇数元素。我们在调用insert和erase后都更新迭代器，因为两者都会使迭代器失效。**所以都要进行更新操作**
+
+### 不要保存end返回的迭代器
+当我们添加/删除vector或string的元素后，或在deque中首元素之外任何位置添加/删除元素后，用来end返回的迭代器总是会失效。因此，添加或删除元素的循环程序必须反复调用end，而不能在循环之前保存end返回的迭代器，一直当作容器末尾使用。  
+
+### vector对象时如何增长的
+为了支持随机访问，vector将元素连续存储——每个元素紧挨着前一个元素存储。通常情况下，我们不必关心一个标准库类型是如何实现的，而只需关心它如何使用。然而，对于vector和string，其部分实现渗透到了接口中。
+
+假定容器中元素是连续存储的，其容器的大小是可变的，考虑向vector和string中添加元素会发生什么；如果没有空间容纳新元素，容器不可能简单地将它添加到内存中其他位置——因为元素必须连续存储。容器必须分配新的内存空间来保存已有元素和新元素，将已有元素从旧位置移动到新空间中，然后添加新元素，释放就存储空间。如果我们每添加一个新元素，vector就执行一次这样的内存分配和释放操作，性能会慢到不可接受。
+
+### 管理容器的成员函数
+
+
+|管理容器大小的操作  |
+|-- :|
+|shrink_to_fit只适用于vector、string和dequecapacity和reserve只适用于vector和string  
+|c.shrink_to_fit()     　　请将capacity减少为size相同大小  |
+|c.capacity()　　　　　　不重新分配内存空间的话，c可以保存多少元素|
+|c.reserve(n)　　　　　  分配至少能容纳n个元素的内存空间|
+
+<font color=#0099ff face="黑体">reserve</font>并不改变容器中元素的数量，它仅影响vector预先分配多大的内存空间  
+<font color=#0099ff face="黑体">lst.resize(3);</font>改变元素个数
+```c
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main() {
+  vector<int> lst = {0,1,2,3,4,5,6,7,8,9};
+  auto it = lst.begin();
+  while(it!=lst.end())
+  {
+    if(*it%2)
+    {
+      it = lst.insert(it,(*it)-10);
+      it = it+2;
+    }
+    else
+      it = lst.erase(it);
+  }
+
+  lst.reserve(11);
+
+  auto it2 = lst.begin();
+  for(;it2!=lst.end();it2++)
+    cout<<*it2<<"  ";
+  cout<<endl;
+
+  lst.resize(3);
+  auto it3 = lst.begin();
+  for(;it3!=lst.end();it3++)
+    cout<<*it3<<"  ";
+  cout<<endl;
+  cout<<lst.capacity()<<" "<<lst.size()<<endl;
+  cout<<lst[4]<<endl;
+  return 0;
+}
+/*-9  1  -7  3  -5  5  -3  7  -1  9
+-9  1  -7
+11 3
+-5*/
+```

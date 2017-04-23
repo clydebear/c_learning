@@ -1,6 +1,6 @@
 
 /*虚函数
-非类的成员函数不能定义为虚函数，类的成员函数中静态成员函数和构造函数也不能定义为虚函数，但可以将析构函数定义为虚函数
+非类的成员函数不能定义为虚函数，类的成员函数中*静态成员函数和构造函数*也不能定义为虚函数，但可以将析构函数定义为虚函数
 优秀的程序员常常把基类的析构函数定义为虚函数。因为，将基类的析构函数定义为虚函数后，
 当利用delete删除一个指向派生类定义的对象指针时，系统会调用相应的类的析构函数。
 而不将析构函数定义为虚函数时，只调用基类的析构函数。
@@ -14,7 +14,7 @@ using namespace std;
 class A{//虚函数示例代码2
     public:
       A(){};
-        virtual void fun(){cout<<"A::fun"<<endl;}//虚函数实现多态:有virtual 指向B
+        /*virtual*/ void fun(){cout<<"A::fun"<<endl;}//虚函数实现多态:有virtual 指向B
         virtual void fun2(){cout<<"A::fun2"<<endl;}
         ~A(){};
 };
@@ -32,6 +32,9 @@ int main()
     fun=&A::fun2;
     (p->*fun)();
     delete p;
-    system("pause");
     return 0;
 }
+/*
+A::fun
+B::fun2
+*/

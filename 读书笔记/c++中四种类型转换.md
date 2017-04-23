@@ -33,6 +33,7 @@ public:
 
 ## 4.reinterpret_cast
 
-interpret是解释的意思，reinterpret即为重新解释，此标识符的意思即为数据的二进制形式重新解释，但是不改变其值。如：int i; char *ptr="hello freind!";
- i=reinterpret_cast<int>(ptr);
+interpret是解释的意思，reinterpret即为重新解释，此标识符的意思即为数据的二进制形式重新解释，但是不改变其值。  
+如：int i; char *ptr="hello freind!";  
+ i=reinterpret_cast<int>(ptr);  
  这个转换方式很少使用。

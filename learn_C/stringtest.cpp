@@ -85,3 +85,64 @@ int main(int argc, char const *argv[])
   cout<<ssss1;
   return 0;
 }
+/*
+#include <bits/stdc++.h>
+
+using namespace std;
+string::size_type countStr(string s,const string str)
+{
+  int count = 0;
+  string::size_type pos = s.find(str);
+  while(pos!=-1)
+  {
+    count++;
+    pos = pos +str.size();
+    pos = s.find(str,pos);
+  }
+  return count;
+}
+int main() {
+  string s = "clydejiang is my English name";
+  const char *cp = "i am clydejiang from fujian province!haha";
+  string ss;
+  string::size_type len_cp = sizeof(cp);//指针的sizeof~~
+  ss.assign(cp,len_cp-4);//cp的前8-4个!!
+  ss.erase();
+  ss.assign(cp);
+  cout<<"ss="<<ss<<endl;
+  cout<<"s="<<s<<endl;
+  cout<<"compare"<<ss.compare(s)<<endl;;
+  const char *in1 = "hahai hahaamhaha 20 years old.";
+  ss.insert(ss.size(),in1+4);//+4去haha
+  ss.append(s);
+  cout<<ss<<endl;
+  //i am clydejiang from fujian province!hahai hahaamhaha 20 years old.clydejiang is my English name
+  cout<<"num of clyde = "<<countStr(ss, "clyde")<<endl;
+  string::size_type pos = ss.find("clyde");
+  while(pos!=-1)
+  {
+    ss.replace(pos,5,"ShuXiong");//clyde改为shuxiong
+    pos = ss.find("clyde");
+  }
+  string::size_type pos1 = ss.find("jiang");
+  while(pos1!=-1)
+  {
+    ss[pos1] = toupper(ss[pos1]);//jiang 变Jiang
+    pos1 = ss.find("jiang");
+  }
+  string::size_type pos3 = ss.find("haha");
+  while(pos3!=-1)
+  {
+    ss.erase(pos3,4);//去haha
+    pos3 = ss.find("haha");
+  }
+  cout<<ss<<endl;
+  return 0;
+}
+ss=i am clydejiang from fujian province!haha
+s=clydejiang is my English name
+compare6
+i am clydejiang from fujian province!hahai hahaamhaha 20 years old.clydejiang is my English name
+num of clyde = 2
+i am ShuXiongJiang from fujian province!i am 20 years old.ShuXiongJiang is my English name
+*/

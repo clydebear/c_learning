@@ -3,13 +3,14 @@
 using namespace std;
 
 int main() {
-  int j = 43;
-  string s = to_string(j);
-  cout<<s<<endl;
-  double d = stod(s);
-  cout<<d<<endl;
-  string s2 = "pi = 3.14";
-  d = stod(s2.substr(s2.find_first_of("+-.0123456789")));
-  cout<<d<<endl;
+  int a[] = {0,1,2,3,4,5,6,7,8,9};
+  cout<<sizeof(a)<<" ";
+  cout<<sizeof(*a)<<" "<<*a<<endl;
+  int val = 1;
+  int *result = find(begin(a),end(a),val);
+  if(result!=end(a))
+    cout<<*result<<endl;
+  else
+    cout<<"not find"<<endl;
   return 0;
 }

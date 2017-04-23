@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <bits/stdc++.h>
 using namespace std;
 
 int main(int argc, char const *argv[])
@@ -35,6 +36,7 @@ int main(int argc, char const *argv[])
   {
     i*=i;
   }
+
   for(auto i : vecint1)
   {
     cout<<i<<" ";
@@ -44,15 +46,17 @@ int main(int argc, char const *argv[])
   //4vector<T>::iterator  it
   vector<int> vecint2(vecint1);
   vector<int>::iterator it1;//可读写，，定义迭代器是什么类型的迭代器
-  const vector<int> vecint3(vecint2);
+  const vector<int> vecint3(vecint2); //容器3里面的元素是不可以改的
   vector<int>::const_iterator it2;//可读不可写
   auto num = vecint2.end() - vecint2.begin();
   cout<<"num = "<<num<<endl;
+  sort(vecint2.begin(),vecint2.end());//排序
   for(it1 = vecint2.begin();it1!=vecint2.end();it1++)//迭代器的使用
   {
     cout<<*it1<<" ";
   }
   cout<<endl;
+
   for(it2 = vecint3.begin();it2!=vecint3.end();it2++)
   {
     cout<<*it2<<" ";
