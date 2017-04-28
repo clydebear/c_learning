@@ -2,14 +2,17 @@
 
 using namespace std;
 
-int main() {
-  vector<int> vec={0,2,1,3,4,5,6,7,8,9};
-  //从尾元素到首元素的反向迭代器
-  for(auto r_iter=vec.crbegin();r_iter!=vec.crend();++r_iter)
-    cout<<*r_iter<<" ";  //打印9，8，7，6，5，4，3，2，1，0
-  sort(vec.begin(),vec.end()); 
-  cout<<endl;
-  for(auto r_iter=vec.crbegin();r_iter!=vec.crend();++r_iter)
-    cout<<*r_iter<<" ";  //打印9，8，7，6，5，4，3，2，1，0
-  cout<<endl;
+int main(int argc, char const *argv[])
+{
+  int *p(new int (42));  //p指向动态内存
+
+  auto q=p;  //p和q指向相同的内存
+
+  delete p; //p和q均变为无效
+
+  q=nullptr;  //指出p不再绑定到任何对象
+  int a = 10;
+  q = &a;
+  cout<<*p<<endl;
+  return 0;
 }
