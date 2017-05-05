@@ -1,5 +1,5 @@
 # 目录
-###### 每天进步一点点__clydbear学习记录站
+###### 每天进步一点点__clydebear学习记录站
 ---
 - [c++基础](https://github.com/clydebear/learning/tree/master/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/C%2B%2Bprimer)
   - [读c++ primer](https://github.com/clydebear/learning/blob/master/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/C%2B%2Bprimer/%E8%AF%BBc%2B%2B%20primer.md)
