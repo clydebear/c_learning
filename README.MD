@@ -1,1 +1,1 @@
-- [读c++ primier](./读书笔记/读c++ primer.md)
+- [读c++ primier](https://github.com/clydebear/learning/blob/master/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E8%AF%BBc%2B%2B%20primer.md)
