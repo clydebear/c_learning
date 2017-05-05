@@ -1,1 +1,1 @@
-- [读c++ primier](./读书笔记/读c++ primier.md)
+- [读c++ primier](./读书笔记/读c++ primer.md)
