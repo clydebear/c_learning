@@ -18,6 +18,7 @@
 - [类设计者工具](https://github.com/clydebear/learning/tree/master/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/C%2B%2Bprimer/%E7%B1%BB%E8%AE%BE%E8%AE%A1%E8%80%85%E5%B7%A5%E5%85%B7)
   - [拷贝控制](https://github.com/clydebear/learning/blob/master/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/C%2B%2Bprimer/%E7%B1%BB%E8%AE%BE%E8%AE%A1%E8%80%85%E5%B7%A5%E5%85%B7/%E6%8B%B7%E8%B4%9D%E6%8E%A7%E5%88%B6.md)
   - [重载运算与类型转换](https://github.com/clydebear/learning/blob/master/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/C%2B%2Bprimer/%E7%B1%BB%E8%AE%BE%E8%AE%A1%E8%80%85%E5%B7%A5%E5%85%B7/%E9%87%8D%E8%BD%BD%E8%BF%90%E7%AE%97%E4%B8%8E%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2.md)
+  - [OPP](https://github.com/clydebear/learning/blob/master/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/C%2B%2Bprimer/%E7%B1%BB%E8%AE%BE%E8%AE%A1%E8%80%85%E5%B7%A5%E5%85%B7/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1.md#%E5%85%AC%E6%9C%89%E3%80%81%E7%A7%81%E6%9C%89%E5%92%8C%E5%8F%97%E4%BF%9D%E6%8A%A4%E7%BB%A7%E6%89%BF)
 - [tools](https://github.com/clydebear/learning/tree/master/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/tools)
   - [atom学习笔记](https://github.com/clydebear/learning/blob/master/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/tools/atom%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.md)
   - [github使用笔记](https://github.com/clydebear/learning/blob/master/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/tools/git%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0.md)
